@@ -71,7 +71,7 @@
         "keep_temporary_files": false,
         "kernel_opts": {
             "lammps": {
-                "lammps_executable": "path to lammpgen/src/lmp_serial",
+                "lammps_executable": "/home/jl9324/env/download/lammpgen/src/lmp_serial",
                 "seed": 6535,
                 "max_neigh": 6000,
                 "use_gpu": false
@@ -137,7 +137,7 @@
         "log_level": "debug"
     },
     "parallel": {
-        "controller": "ipyparallel",
+        "controller": "serial",
         "controller_options": {
             "ipyparallel": {
                 "max_tasks": 5000
