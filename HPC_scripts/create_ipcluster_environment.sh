@@ -65,7 +65,7 @@ EOF
 
 #cat $TMPFILE >> 'script1.txt'
 
-SCHEDJOB=$(qsub $TMPFILE | awk '{print $4}')
+SCHEDJOB=$(sbatch $TMPFILE | awk '{print $4}')
 echo 'scheduler job submitted:' $SCHEDJOB
 
 TMPFILE=`mktemp` || exit 1
@@ -94,9 +94,9 @@ cd $SGE_O_WORKDIR
 sleep 10
 MONITOR=$(command -v monitor_process)
 if [[ ! -z "$MONITOR" ]]; then
-    mpirun --n=${NTASKS} monitor_process --wtype W ipengine
+    mpirun --n ${NTASKS} monitor_process --wtype W ipengine
 else
-    mpirun --n=${NTASKS} ipengine
+    mpirun --n ${NTASKS} ipengine
 fi
 
 EOF

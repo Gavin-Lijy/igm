@@ -1,5 +1,6 @@
 #user added
 #
+*.out
 *.hss
 *.pdf
 ipython-log*
@@ -12,6 +13,9 @@ __pycache__/
 
 # C extensions
 *.so
+*.sqlite
+*.hss
+*.hss.T
 
 # Distribution / packaging
 .Python
@@ -120,3 +124,11 @@ igm/cython_compiled/sprite.cpp
 # pycharm
 .idea/
 
+demo/igm-model.hss.T
+demo/output.txt
+demo/stepdb.sqlite
+demo/demo_sample_outputs/igm-model.hss.randomInit
+demo/demo_sample_outputs/igm-model.hss.T
+demo/demo_sample_outputs/stepdb.sqlite
+HPC_scripts/igm_output.txt
+HPC_scripts/slurm-634879.out

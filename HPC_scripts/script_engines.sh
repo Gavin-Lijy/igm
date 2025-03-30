@@ -12,7 +12,7 @@
 #$ -pe dc* 100 
 
 
-export PATH="/u/home/b/bonimba/miniconda3/bin:/u/home/b/bonimba/miniconda3/condabin:/u/local/compilers/intel/18.0.4/parallel_studio_xe_2018/bin:/u/local/compilers/intel/18.0.4/compilers_and_libraries_2018.5.274/linux/mpi/intel64/bin:/u/local/compilers/intel/18.0.4/compilers_and_libraries_2018.5.274/linux/bin/intel64:/u/local/compilers/intel/18.0.4/clck/2018.3/bin/intel64:/u/local/compilers/intel/18.0.4/itac/2018.4.025/intel64/bin:/u/local/compilers/intel/18.0.4/inspector/bin64:/u/local/compilers/intel/18.0.4/vtune_amplifier_2018/bin64:/u/local/compilers/intel/18.0.4/advisor_2018/bin64:/u/systems/UGE8.6.4/bin/lx-amd64:/u/local/bin:/u/local/sbin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/u/home/b/bonimba/bin"
+export PATH="/home/jl9324/miniforge3/envs/igm/bin:/home/jl9324/bin:/home/jl9324/.local/bin:/usr/local/bin:/home/jl9324/env/download/sratoolkit.3.2.1-ubuntu64/bin:/home/jl9324/.vscode-server/cli/servers/Stable-384ff7382de624fb94dbaf6da11977bba1ecd427/server/bin/remote-cli:/home/jl9324/miniforge3/condabin:/home/jl9324/.local/bin:/home/jl9324/bin:/opt/software/spack/bin:/opt/slurm/22.05.8/bin:/opt/slurm/22.05.8/sbin:/usr/share/lmod/lmod/libexec:/usr/bin:/bin:/usr/local/sbin:/usr/sbin"
 ulimit -s 8192
 
 cd 
@@ -21,9 +21,8 @@ cd
 sleep 10
 MONITOR=
 if [[ ! -z "" ]]; then
-    mpirun --n=100 monitor_process --wtype W ipengine
+    mpirun --n 100 monitor_process --wtype W ipengine
 else
-    mpirun --n=100 ipengine
+    mpirun --n 100 ipengine
 fi
-
 
