@@ -3,7 +3,7 @@
 # On the top of this, the serial IGM job will be submitted
 
 # number of workers
-NTASKS=16
+NTASKS=10
 # memory per worker
 MEM=$2
 # walltime
@@ -55,7 +55,8 @@ ulimit -s 8192
 cd $SGE_O_WORKDIR
 
 # myip=\$(getent hosts \$(hostname) | awk '{print \$1}')
-myip=\$(hostname -I | cut -d' ' -f1)
+# myip=\$(hostname -I | cut -d' ' -f1)
+myip=0.0.0.0
 MONITOR=$(command -v monitor_process)
 if [[ ! -z "$MONITOR" ]]; then
     monitor_process --wtype S ipcontroller --nodb --ip=\$myip 
