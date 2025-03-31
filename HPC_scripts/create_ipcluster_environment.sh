@@ -3,7 +3,7 @@
 # On the top of this, the serial IGM job will be submitted
 
 # number of workers
-NTASKS=100
+NTASKS=10
 # memory per worker
 MEM=$2
 # walltime
