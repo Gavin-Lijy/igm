@@ -15,7 +15,7 @@ SMEM=$5
 
 let NTOT=${NTASKS}+1
 if [[ -z "$2" ]]; then
-    MEM=2G
+    MEM=20G
 fi
 if [[ -z "$3" ]]; then
     WTIME=200:59:59
@@ -26,7 +26,7 @@ if [[ -z "$4" ]]; then
 fi
 
 if [[ -z "$5" ]]; then
-    SMEM=10G
+    SMEM=25G
 fi
 
 echo "requesting ${NTASKS} processes, ${MEM} per cpu, walltime: ${WTIME}" 

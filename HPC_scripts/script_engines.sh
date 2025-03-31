@@ -2,7 +2,7 @@
 #$ -M bonimba@g.ucla.edu
 #$ -m ea
 #$ -N ipycluster
-#$ -l h_data=2G
+#$ -l h_data=20G
 #$ -l h_rt=200:59:59
 #$ -l highp
 #$ -cwd
