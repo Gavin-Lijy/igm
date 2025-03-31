@@ -3,7 +3,7 @@
 # On the top of this, the serial IGM job will be submitted
 
 # number of workers
-NTASKS=12
+NTASKS=100
 # memory per worker
 MEM=$2
 # walltime
@@ -54,7 +54,8 @@ ulimit -s 8192
 
 cd $SGE_O_WORKDIR
 
-myip=\$(getent hosts \$(hostname) | awk '{print \$1}')
+# myip=\$(getent hosts \$(hostname) | awk '{print \$1}')
+myip=\$(hostname -I | cut -d' ' -f1)
 MONITOR=$(command -v monitor_process)
 if [[ ! -z "$MONITOR" ]]; then
     monitor_process --wtype S ipcontroller --nodb --ip=\$myip 
@@ -63,7 +64,7 @@ else
 fi
 EOF
 
-#cat $TMPFILE >> 'script1.txt'
+# cat $TMPFILE >> 'script1.txt'
 
 SCHEDJOB=$(sbatch $TMPFILE | awk '{print $4}')
 echo 'scheduler job submitted:' $SCHEDJOB
@@ -96,8 +97,9 @@ MONITOR=$(command -v monitor_process)
 if [[ ! -z "$MONITOR" ]]; then
     mpirun --n ${NTASKS} monitor_process --wtype W ipengine
 else
-    mpirun --n ${NTASKS} ipengine
+    mpirun --map-by :OVERSUBSCRIBE --n ${NTASKS} ipengine
 fi
+# add --map-by :OVERSUBSCRIBE to allow more than one process per core
 
 EOF
 
