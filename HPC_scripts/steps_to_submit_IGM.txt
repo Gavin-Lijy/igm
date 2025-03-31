@@ -4,3 +4,12 @@ How to create the parallel environment (step 1) and submit a successful parallel
  - ```bash create_ipcluster_environment.sh```: this will submit the controller and create the ```submit_engines``` script, ready for you to submit (step 1a).
  - Wait for the controller job to start (and generate its own ```out`` and `err` files), and then submit the engines with ```qsub submit_engines``` (step 1b).
  - When the engines are also running, you can submit the actual IGM calculation on top of the (controller + engines) scaffold, using ```qsub submit_igm``` (step 2).
+
+- 1a
+ipcontroller
+- 1b
+mpirun --n {Ntask} ipengine
+
+# clean the profiles
+ ipcluster stop
+rm -rf ~/.ipython/profile_default/security/*
