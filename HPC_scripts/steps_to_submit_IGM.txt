@@ -8,6 +8,7 @@ How to create the parallel environment (step 1) and submit a successful parallel
 - 1a
 ipcontroller
 - 1b
+# after  Completed registration with id
 mpirun --n {Ntask} ipengine
 
 # clean the profiles

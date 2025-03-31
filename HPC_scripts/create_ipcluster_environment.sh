@@ -3,7 +3,7 @@
 # On the top of this, the serial IGM job will be submitted
 
 # number of workers
-NTASKS=10
+NTASKS=16
 # memory per worker
 MEM=$2
 # walltime
@@ -15,7 +15,7 @@ SMEM=$5
 
 let NTOT=${NTASKS}+1
 if [[ -z "$2" ]]; then
-    MEM=20G
+    MEM=2G
 fi
 if [[ -z "$3" ]]; then
     WTIME=200:59:59
@@ -26,7 +26,7 @@ if [[ -z "$4" ]]; then
 fi
 
 if [[ -z "$5" ]]; then
-    SMEM=25G
+    SMEM=10G
 fi
 
 echo "requesting ${NTASKS} processes, ${MEM} per cpu, walltime: ${WTIME}" 
