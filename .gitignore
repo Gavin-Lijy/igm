@@ -137,3 +137,4 @@ HPC_scripts/igm_output.txt
 HPC_scripts/slurm-634879.out
 HPC_scripts/err_igm
 HPC_scripts/err_controller
+HPC_scripts/igm-model.hss.randomInit
