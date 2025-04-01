@@ -30,8 +30,8 @@ cat > $TMPFILE <<- EOF
 #SBATCH --time=${WTIME}
 #SBATCH --partition=cpu
 #SBATCH --chdir=${CURRDIR}
-SBATCH --output=out_controller
-SBATCH --error=err_controller
+#SBATCH --output=out_controller
+#SBATCH --error=err_controller
 #SBATCH --export=ALL
 
 export PATH="$PATH"
@@ -50,7 +50,9 @@ else
 fi
 EOF
 
+
 # Submit controller job
+cat $TMPFILE >> 'script1.txt'
 SCHEDJOB=$(sbatch $TMPFILE | awk '{print $4}')
 echo "Scheduler job submitted: $SCHEDJOB"
 
