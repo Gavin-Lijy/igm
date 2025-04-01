@@ -14,3 +14,5 @@ mpirun --n {Ntask} ipengine
 # clean the profiles
  ipcluster stop
 rm -rf ~/.ipython/profile_default/security/*
+
+in json, segmentation is resolution for hcs generation

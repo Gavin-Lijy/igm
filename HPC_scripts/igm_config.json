@@ -8,7 +8,6 @@
             "Y"
         ],
         "segmentation": 1024000
-        //  resolution
     },
     "model": {
         "population_size": 100,
