@@ -5,17 +5,14 @@
 #----------------------------------------#
 
 #!/bin/bash
-#SBATCH --job-name=ipycluster
+#SBATCH --job-name=igm
 #SBATCH --mail-user=bonimba@g.ucla.edu
 #SBATCH --mail-type=END,FAIL
 #SBATCH --mem=200G
 #SBATCH --time=48:59:59
 #SBATCH --partition=cpu
-#SBATCH --chdir=$PWD
-#SBATCH --output=out_engines
-#SBATCH --error=err_engines
-#SBATCH --ntasks=100
-#SBATCH --cpus-per-task=1  # One CPU per MPI task
+#SBATCH --output=out_igm
+#SBATCH --error=err_igm
 #SBATCH --export=ALL
 
 export PATH="$PATH"

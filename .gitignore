@@ -13,6 +13,8 @@ __pycache__/
 
 
 # C extensions
+err_*
+out_*
 *.so
 *.sqlite
 *.hss
@@ -133,3 +135,5 @@ demo/demo_sample_outputs/igm-model.hss.T
 demo/demo_sample_outputs/stepdb.sqlite
 HPC_scripts/igm_output.txt
 HPC_scripts/slurm-634879.out
+HPC_scripts/err_igm
+HPC_scripts/err_controller

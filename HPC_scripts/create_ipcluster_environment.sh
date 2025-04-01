@@ -72,7 +72,6 @@ cat > $TMPFILE <<- EOF
 #SBATCH --ntasks=${NTASKS}
 #SBATCH --cpus-per-task=1
 #SBATCH --export=ALL
-#SBATCH --dependency=afterok:$SCHEDJOB  # Engines start after controller
 
 export PATH="$PATH"
 ulimit -s 8192
