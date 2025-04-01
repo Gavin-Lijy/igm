@@ -4,17 +4,19 @@
 #- IGM SUBMISSION SCRIPT, multi-threaded JOB
 #----------------------------------------#
 
-#$ -M bonimba@g.ucla.edu
-#$ -m ea
-#$ -N jobname
-#$ -l h_data=40G
-#$ -l h_rt=30:00:00
-#$ -l highp
-#$ -cwd
-#$ -o out_igm
-#$ -e err_igm
-#$ -V 
-#$ -pe shared 2
+#!/bin/bash
+#SBATCH --job-name=ipycluster
+#SBATCH --mail-user=bonimba@g.ucla.edu
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mem=200G
+#SBATCH --time=48:59:59
+#SBATCH --partition=cpu
+#SBATCH --chdir=$PWD
+#SBATCH --output=out_engines
+#SBATCH --error=err_engines
+#SBATCH --ntasks=100
+#SBATCH --cpus-per-task=1  # One CPU per MPI task
+#SBATCH --export=ALL
 
 export PATH="$PATH"
 ulimit -s 8192

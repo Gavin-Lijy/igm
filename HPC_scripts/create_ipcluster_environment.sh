@@ -1,108 +1,93 @@
-# This script prepares the controller/engines environment, using the MONITOR option 
-# which allows to keep track of how the tasks are split among the different engines
-# On the top of this, the serial IGM job will be submitted
+#!/bin/bash
 
-# number of workers
-NTASKS=10
-# memory per worker
-MEM=$2
-# walltime
-WTIME=$3
-# conda env to use
-CONDA=$4
-# scheduler memory, usual a little larger than workers
-SMEM=$5
+# Number of workers
+NTASKS=100
+# Memory per worker
+MEM_PER_TASK=2G
+# Compute total memory
+TOTAL_MEM=$((NTASKS * ${MEM_PER_TASK%G}))G
+# Walltime
+WTIME=48:59:59
+# Conda environment (optional)
+CONDA_ENV=py3
+# Scheduler memory (larger than worker memory)
+SCHEDULER_MEM=10G
 
-let NTOT=${NTASKS}+1
-if [[ -z "$2" ]]; then
-    MEM=2G
-fi
-if [[ -z "$3" ]]; then
-    WTIME=200:59:59
-fi
+echo "Requesting ${NTASKS} tasks, ${MEM_PER_TASK} per task, total memory: ${TOTAL_MEM}, walltime: ${WTIME}"
 
-if [[ -z "$4" ]]; then
-    CONDA=py3
-fi
+CURRDIR=$(pwd)
+TMPFILE=$(mktemp) || exit 1
 
-if [[ -z "$5" ]]; then
-    SMEM=10G
-fi
-
-echo "requesting ${NTASKS} processes, ${MEM} per cpu, walltime: ${WTIME}" 
-
-CURRDIR=`pwd`
-
-TMPFILE=`mktemp` || exit 1
-# write the slurm script
+# -------------------
+# SLURM Script for CONTROLLER
+# -------------------
 cat > $TMPFILE <<- EOF
 #!/bin/bash
-#$ -M bonimba@g.ucla.edu
-#$ -m ea
-#$ -N ipycontroller
-#$ -l h_data=${SMEM}
-#$ -l h_rt=${WTIME}
-#$ -l highp
-#$ -cwd
-#$ -o out_controller
-#$ -e err_controller
-#$ -V 
+#SBATCH --job-name=ipycontroller
+#SBATCH --mail-user=bonimba@g.ucla.edu
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mem=${SCHEDULER_MEM}
+#SBATCH --time=${WTIME}
+#SBATCH --partition=cpu
+#SBATCH --chdir=${CURRDIR}
+SBATCH --output=out_controller
+SBATCH --error=err_controller
+#SBATCH --export=ALL
 
 export PATH="$PATH"
 ulimit -s 8192
 
-
-cd $SGE_O_WORKDIR
-
+echo "Starting IPython Controller..."
 # myip=\$(getent hosts \$(hostname) | awk '{print \$1}')
 # myip=\$(hostname -I | cut -d' ' -f1)
 myip=0.0.0.0
-MONITOR=$(command -v monitor_process)
-if [[ ! -z "$MONITOR" ]]; then
-    monitor_process --wtype S ipcontroller --nodb --ip=\$myip 
+MONITOR=\$(command -v monitor_process)
+
+if [[ ! -z "\$MONITOR" ]]; then
+    monitor_process --wtype S ipcontroller --nodb --ip=\$myip
 else
     ipcontroller --nodb --ip=\$myip
 fi
 EOF
 
-# cat $TMPFILE >> 'script1.txt'
-
+# Submit controller job
 SCHEDJOB=$(sbatch $TMPFILE | awk '{print $4}')
-echo 'scheduler job submitted:' $SCHEDJOB
+echo "Scheduler job submitted: $SCHEDJOB"
 
-TMPFILE=`mktemp` || exit 1
-# write the slurm script
+# -------------------
+# SLURM Script for ENGINES
+# -------------------
+TMPFILE=$(mktemp) || exit 1
 cat > $TMPFILE <<- EOF
 #!/bin/bash
-#$ -M bonimba@g.ucla.edu
-#$ -m ea
-#$ -N ipycluster
-#$ -l h_data=${MEM}
-#$ -l h_rt=${WTIME}
-#$ -l highp
-#$ -cwd
-#$ -o out_engines
-#$ -e err_engines
-#$ -V
-#$ -pe dc* ${NTASKS} 
-
+#SBATCH --job-name=ipycluster
+#SBATCH --mail-user=bonimba@g.ucla.edu
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mem=${TOTAL_MEM}      # Total memory = NTASKS * MEM_PER_TASK
+#SBATCH --time=${WTIME}
+#SBATCH --partition=cpu
+#SBATCH --chdir=${CURRDIR}
+#SBATCH --output=out_engines
+#SBATCH --error=err_engines
+#SBATCH --ntasks=${NTASKS}
+#SBATCH --cpus-per-task=1
+#SBATCH --export=ALL
+#SBATCH --dependency=afterok:$SCHEDJOB  # Engines start after controller
 
 export PATH="$PATH"
 ulimit -s 8192
 
-cd $SGE_O_WORKDIR
-
-# let the scheduler setup finish
+# Let the scheduler setup finish
 sleep 10
-MONITOR=$(command -v monitor_process)
-if [[ ! -z "$MONITOR" ]]; then
-    mpirun --n ${NTASKS} monitor_process --wtype W ipengine
-else
-    mpirun --map-by :OVERSUBSCRIBE --n ${NTASKS} ipengine
-fi
-# add --map-by :OVERSUBSCRIBE to allow more than one process per core
+MONITOR=\$(command -v monitor_process)
 
+if [[ ! -z "\$MONITOR" ]]; then
+    mpirun --map-by :OVERSUBSCRIBE -n ${NTASKS} monitor_process --wtype W ipengine
+else
+    mpirun --map-by :OVERSUBSCRIBE -n ${NTASKS} ipengine
+fi
 EOF
+
 
 #cat $TMPFILE
 sleep 1
