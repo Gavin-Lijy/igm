@@ -31,7 +31,7 @@
     },
     "restraints": {
         "Hi-C": {
-            "input_matrix": "/home/jl9324/Sperm_3D_Genome_Project/wo_trimming_fanc/igm/hcs/Diff-SPG_1mb.hcs",
+            "input_matrix": "/home/jl9324/Sperm_3D_Genome_Project/wo_trimming_fanc/igm/hcs/SPC_1mb.hcs",
             "intra_sigma_list": [
                 1.0,
                 0.2,
