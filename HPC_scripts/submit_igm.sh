@@ -14,20 +14,21 @@
 #SBATCH --output=out_igm
 #SBATCH --error=err_igm
 #SBATCH --export=ALL
+#SBATCH --cpus-per-task=2
 
 export PATH="$PATH"
 ulimit -s 8192
 
 # -----------------------
 # print JOB ID, can be useful for keeping track of status
-echo $JOB_ID
+echo $SLURM_JOB_ID
 
 # print PATH pointing to directory the job is run from
-echo $SGE_O_WORKDIR
+echo $SLURM_SUBMIT_DIR
 
 
 # shared memory parallelization: same node, more cores, export number of threads
-export OMP_NUM_THREADS=2
+
 echo "submitting IGM optimization..."
 
 # execute job

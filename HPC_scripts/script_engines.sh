@@ -2,13 +2,13 @@
 #SBATCH --job-name=ipycluster
 #SBATCH --mail-user=bonimba@g.ucla.edu
 #SBATCH --mail-type=END,FAIL
-#SBATCH --mem=200G      # Total memory = NTASKS * MEM_PER_TASK
 #SBATCH --time=48:59:59
 #SBATCH --partition=cpu
 #SBATCH --chdir=/home/jl9324/env/download/igm/HPC_scripts
 #SBATCH --output=out_engines
 #SBATCH --error=err_engines
 #SBATCH --ntasks=100
+#SBATCH --mem-per-cpu=2G
 #SBATCH --cpus-per-task=1
 #SBATCH --export=ALL
 
