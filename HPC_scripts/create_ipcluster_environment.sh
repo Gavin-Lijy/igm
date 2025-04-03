@@ -72,11 +72,11 @@ cat > $TMPFILE <<- EOF
 #SBATCH --output=out_engines
 #SBATCH --error=err_engines
 #SBATCH --ntasks=${NTASKS}
-#SBATCH --cpus-per-task=1
+#SBATCH --cpus-per-task=2
 #SBATCH --export=ALL
 
 export PATH="$PATH"
-ulimit -s 8192
+# ulimit -s 8192
 
 # Let the scheduler setup finish
 sleep 10

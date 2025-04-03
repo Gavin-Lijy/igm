@@ -17,7 +17,7 @@
 #SBATCH --cpus-per-task=2
 
 export PATH="$PATH"
-ulimit -s 8192
+# ulimit -s 8192
 
 # -----------------------
 # print JOB ID, can be useful for keeping track of status
