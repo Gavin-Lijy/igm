@@ -8,7 +8,7 @@
 #SBATCH --job-name=igm
 #SBATCH --mail-user=bonimba@g.ucla.edu
 #SBATCH --mail-type=END,FAIL
-#SBATCH --mem=50G
+#SBATCH --mem=200G
 #SBATCH --time=48:59:59
 #SBATCH --partition=cpu
 #SBATCH --output=out_igm

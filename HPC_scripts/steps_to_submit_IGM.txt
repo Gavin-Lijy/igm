@@ -16,3 +16,5 @@ mpirun --n {Ntask} ipengine
 rm -rf ~/.ipython/profile_default/security/*
 
 in json, segmentation is resolution for hcs generation
+
+imp_serial runs on  ipycluster node

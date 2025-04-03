@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Number of workers
-NTASKS=2
+NTASKS=50
 # Memory per worker
-MEM_PER_TASK=100G
+MEM_PER_TASK=5G
 # Compute total memory
 # TOTAL_MEM=$((NTASKS * ${MEM_PER_TASK%G}))G
 # Walltime
