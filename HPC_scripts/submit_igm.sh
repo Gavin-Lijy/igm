@@ -8,13 +8,13 @@
 #SBATCH --job-name=igm
 #SBATCH --mail-user=bonimba@g.ucla.edu
 #SBATCH --mail-type=END,FAIL
-#SBATCH --mem=200G
+#SBATCH --mem=50G
 #SBATCH --time=48:59:59
 #SBATCH --partition=cpu
 #SBATCH --output=out_igm
 #SBATCH --error=err_igm
 #SBATCH --export=ALL
-#SBATCH --cpus-per-task=2
+#SBATCH --cpus-per-task=1
 
 export PATH="$PATH"
 # ulimit -s 8192

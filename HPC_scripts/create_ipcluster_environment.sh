@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # Number of workers
-NTASKS=100
+NTASKS=2
 # Memory per worker
-MEM_PER_TASK=2G
+MEM_PER_TASK=100G
 # Compute total memory
-TOTAL_MEM=$((NTASKS * ${MEM_PER_TASK%G}))G
+# TOTAL_MEM=$((NTASKS * ${MEM_PER_TASK%G}))G
 # Walltime
 WTIME=48:59:59
 # Conda environment (optional)
@@ -35,7 +35,7 @@ cat > $TMPFILE <<- EOF
 #SBATCH --export=ALL
 
 export PATH="$PATH"
-ulimit -s 8192
+# ulimit -s 8192
 
 echo "Starting IPython Controller..."
 # myip=\$(getent hosts \$(hostname) | awk '{print \$1}')
@@ -65,7 +65,6 @@ cat > $TMPFILE <<- EOF
 #SBATCH --job-name=ipycluster
 #SBATCH --mail-user=bonimba@g.ucla.edu
 #SBATCH --mail-type=END,FAIL
-#SBATCH --mem=${TOTAL_MEM}      # Total memory = NTASKS * MEM_PER_TASK
 #SBATCH --time=${WTIME}
 #SBATCH --partition=cpu
 #SBATCH --chdir=${CURRDIR}
@@ -73,6 +72,7 @@ cat > $TMPFILE <<- EOF
 #SBATCH --error=err_engines
 #SBATCH --ntasks=${NTASKS}
 #SBATCH --cpus-per-task=2
+#SBATCH --mem-per-cpu=${MEM_PER_TASK}
 #SBATCH --export=ALL
 
 export PATH="$PATH"
