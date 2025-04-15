@@ -3,7 +3,7 @@ import argparse
 import numpy as np
 
 def fmax_norm(self,method = 'NM'):
-
+# as in https://www.pnas.org/doi/full/10.1073/pnas.1512577113#supplementary-materials
         fmax = None
         matrix = self.matrix.toarray()
         if method == 'NM':#method neighbour max
